@@ -1,0 +1,24 @@
+{
+  "name": "goks_dressing_room",
+  "version": "1.0.0",
+  "description": "simple try-on function component of larger in-dev app",
+  "main": "script.js",
+  "scripts": {
+    "test": "npm start",
+    "start": "npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Albee89/goks_dressing_room.git"
+  },
+  "keywords": [
+    "wardobe",
+    "fashion"
+  ],
+  "author": "Alex Bain",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Albee89/goks_dressing_room/issues"
+  },
+  "homepage": "https://github.com/Albee89/goks_dressing_room#readme"
+}
