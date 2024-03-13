@@ -1,109 +1,131 @@
-<!DOCTYPE html>
-<html lang="en">
+// Define rainbow array and getRandomInt function if not already defined
+var rainbow = ["#FF0000", "#00FF00", "#0000FF"]; // Example colors, add more if needed
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.5.0/fabric.min.js"></script>
-  
-  <title>Gok's Dressing Room</title>
-</head>
+// Defining startTimer and stopTimer functions:
+var startTime;
+function startTimer() {
+  startTime = performance.now();
+}
+function stopTimer() {
+  return (performance.now() - startTime).toFixed(2);
+}
 
-<body>
+// Rendering canvas #1
+var canvas1  = new fabric.Canvas('c1', { backgroundColor: "#000" });
 
-<canvas id="c1" width="400" height="400"></canvas>
-<canvas id="c2" width="400" height="400"></canvas>
-  
+startTimer();
+for (var i = 100; i >= 0; i--) {
+  var dot = new fabric.Circle({
+    left:   getRandomInt(0, 400),
+    top:    getRandomInt(0, 350),
+    radius: 3,
+    fill:   rainbow[getRandomInt(0, rainbow.length - 1)],
+    objectCaching: false
+  });
+  canvas1.add(dot);
+}
 
-  <div class="container">
-    <div class="wrapper">
-      <div class="detective-hat">
-        <div class="flap"></div>
-      </div>
+// Rendering canvas #2
+var canvas2  = new fabric.Canvas('c2', { backgroundColor: "#000", renderOnAddRemove: false });
 
-      <div class="judge-wig">
-        <div class="middle-part"></div>
-        <div class="curl"></div>
-        <div class="curl" style="left: auto; right: 0;"></div>
-      </div>
 
-      <div class="ears">
-        <div class="ear"></div>
-        <div class="ear"></div>
-      </div>
-      <div class="head">
-        <div class="mustaches">
-          <div class="mus">
-            <div class="mustach"></div>
-            <div class="mustach"></div>
-            <div class="mustach"></div>
-            <div class="lower-head"></div>
-          </div>
-          <div class="mus">
-            <div class="mustach"></div>
-            <div class="mustach"></div>
-            <div class="mustach"></div>
-          </div>
-        </div>
-        <div class="eyes">
-          <div class="eye"></div>
-          <div class="eye"></div>
-        </div>
-        <div class="nose">
-          <div class="shape"></div>
-        </div>
-        <div class="mouth">^</div>
-      </div>
-      <div class="body"></div>
-      <div class="pads">
-        <div class="pad"></div>
-        <div class="pad"></div>
-      </div>
-      <div class="hat">
-        <div class="bottom"></div>
-      </div>
-      <div class="glasses">
-        <div class="glass"></div>
-        <div class="glass"></div>
-      </div>
-      <div class="tie"></div>
-    </div>
-    <div class="controls">
-      <input type="checkbox" id="eyeglasses">
-      <input type="checkbox" id="hat">
-      <input type="checkbox" id="tie">
-      <label class="glassescontrol" data-text="eyeglasses" for="eyeglasses">
-        <div class="glassesicon">
-          <div class="glassicon"></div>
-          <div class="glassicon"></div>
-        </div>
-      </label>
-      <label data-text="Hat" class="hatcontrol" for="hat">
-        <div class="haticon">
-          <div class="bottom">
-          </div>
-        </div>
-      </label>
-      <label data-text="Tie" class="tiecontrol" for="tie">
-        <div class="tieicon"></div>
-      </label>
-      <label data-text="Detective Hat" class="detective-hat-control" for="detective-hat-control">
-        <div class="detective-haticon">
-          <div class="bottom"></div>
-        </div>
-      </label>
-      
-      <label data-text="Judge Wig" class="judge-wig-control" for="judge-wig-control">
-        <div class="judge-wigicon">
-          <div class="bottom"></div>
-        </div>
-      </label>
-    </div>
-  </div>
+startTimer();
+for (var i = 1000; i >= 0; i--) {
+  var dot = new fabric.Circle({
+    left:   getRandomInt(0, 400),
+    top:    getRandomInt(0, 350),
+    radius: 3,
+    fill:   rainbow[getRandomInt(0, rainbow.length - 1)],
+    objectCaching: false
+  });
+  canvas2.add(dot);
+}
+canvas2.renderAll(); // Note, calling renderAll() is important in this case
 
-  <script src="script.js"></script>
-  
-</body>
+//controls
+const hatcheck = document.querySelector("#hat");
+const glassescheck = document.querySelector("#eyeglasses");
+const tiecheck = document.querySelector("#tie");
+const detectiveHatCheck = document.querySelector("#detective-hat-control");
+const judgeWigCheck = document.querySelector("#judge-wig-control");
 
-</html>
+//accessories
+const hat = document.querySelector(".hat");
+const glasses = document.querySelector(".glasses");
+const tie = document.querySelector(".tie");
+const detectiveHat = document.querySelector(".detective-hat");
+const judgeWig = document.querySelector(".judge-wig");
+
+
+//Reveal Hat
+hatcheck.addEventListener("change", hatfun);
+
+function hatfun() {
+  if (hatcheck.checked == true) {
+    hat.style.bottom = "165px";
+  } else {
+    hat.style.bottom = "400px";
+  }
+}
+
+//Reveal Eyeglasses
+glassescheck.addEventListener("change", glassesfun);
+
+function glassesfun() {
+  if (glassescheck.checked == true) {
+    glasses.style.right = "50%";
+  } else {
+    glasses.style.right = "-50%";
+  }
+}
+
+//Reveal Tie
+tiecheck.addEventListener("change", tiefun);
+
+function tiefun() {
+  if (tiecheck.checked == true) {
+    tie.style.bottom = "10px";
+  } else {
+    tie.style.bottom = "-80px";
+  }
+}
+
+
+
+// Reveal Detective Hat
+detectiveHatCheck.addEventListener("change", detectiveHatFun);
+
+function detectiveHatFun() {
+  if (detectiveHatCheck.checked) {
+    detectiveHat.style.bottom = "165px";
+  } else {
+    detectiveHat.style.bottom = "350px";
+  }
+}
+
+// Reveal Judge Wig
+judgeWigCheck.addEventListener("change", judgeWigFun);
+
+function judgeWigFun() {
+  if (judgeWigCheck.checked) {
+    judgeWig.style.bottom = "200px";
+  } else {
+    judgeWig.style.bottom = "380px";
+  }
+}
+
+
+// Reveal Detective Hat
+detectiveHatCheck.addEventListener("change", detectiveHatFun);
+
+function detectiveHatFun() {
+  if (detectiveHatCheck.checked) {
+    detectiveHat.style.bottom = "165px";
+  } else {
+    detectiveHat.style.bottom = "350px";
+  }
+}
+
